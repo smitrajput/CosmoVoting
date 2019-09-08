@@ -1,0 +1,13 @@
+.main {
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(30,30,30,0.3);
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.link {
+    align-content: center;
+    text-align: center;
+}

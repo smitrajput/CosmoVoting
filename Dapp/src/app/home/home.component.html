@@ -1,0 +1,9 @@
+<br>
+<div class="main">
+  <mat-nav-list>
+    <a mat-list-item *ngFor="let link of links" class="link"
+      [routerLink]="link.url"> <b>{{link.label}}</b>
+    </a>
+  </mat-nav-list>
+</div>
+

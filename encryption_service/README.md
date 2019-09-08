@@ -1,0 +1,71 @@
+# ENCRYPTION SERVICE 
+
+This is a small service for encryption and decryption functions using pycryptodome library with RSA 2048 bit encryption.
+
+## generate keys : 
+
+- endpoint : `/key/generate/`
+- METHOD : `GET`
+
+generates RSA key pair and returns in exported form :
+#### Response :
+
+
+```json
+{
+    "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEAktxPwsGQo9Ubm9E7QCdR8tjHUYoeSa6fmrX36Xnm869YhHDm\nMfD9nJqaO++BK8jpCgIQ9jqAJRAJcRXJmkIsFEkZMyMyS9FqkxmBJ2Z814oxY2cd\n/AJbF4gw5V4x4S7BPNc1MXVjItmH6XAYsCTAyhkIFjS1VdWPBTgKjfSpvONWsI8c\nRpsnqi9jxsYGm7f1BaKx4idzhdommlL+ySAAJAc8TeBHw1mJiNGZSAYqkGJj7VGC\nRsWbMzgYw0hvsfyfa5N1Br69O46TTEwknXMr0Ll8hMVqnHggO04DRMErNQcfSfQj\nd5gr01r6ZtPKBLVv6ppIrBluj7nwwKZ3FD6NBQIDAQABAoIBAB/6NKvVdecWegJ9\nlocriJ52MUBB8MJecYZAZRDDaFRbM8zywEzTioVU7IxsZBXik0uIk6TprAll6ohj\nFBiwm+R23jPSUBtOKASLoyGvITPVdVeNlmvPH4KKNwtabUX45j6XJY/1XXazIvLj\nY5zHA+t9c9NR+sIL1C5wu2uZgHQOP9sJYkUSbzJ92nq5EuW0K3SRP/d0hj4ue1lC\n2LeUU9F+OTGPA0kdlIPnuhoT/HzPYof/aHhYQnd9Y0VY9MyECulOTF3vrPvGikHu\n/frqtaB+PtBJD4v1hWJAXmv58mw6dKtuo3V1R7yP+Fe53olMRTCqLp8vreveZdj0\ng9ZDXoECgYEAwK+0z8Vi4O9Pzv//Z5bmoBhhqqM4xH09di9cvHsp3NriLgnmv9RK\neZXl5mAcxDbDEGa/ay/YDsYpzx18uXlwT8depuvlWhGsUErG0M5B8oBQnyYD42EE\nn3dYJb+nYtKMFOO3wI6lcztjRRSGUq83c2yrTPxKsI9vxj0dK0GAO3ECgYEAwx3b\nYz6B3DkdRsOgYWZa1kJPw+MuBDLmpSgB4mQdwnNEOQB7U+gCzFNJ4eApAQMeh+KH\n5FxFFHMWD1SPgOCqB5I+rYWpXTeri4KFXWQLN7/s4LKJanBIUN7WrInLV9PhPr/g\nDXF9+9WmUUJVGpCJB0ZeFCr59QMwsl12MbBimNUCgYAtILmzM6J91e6WJ4S0yTXI\nZw1wvnuMIVzksiEBD8N1M1pnt+/wG5M5uK64bugt2DmFPNs2CmWKyESAeoJ8mgGA\n3cvAQl1b4+m8gFbiDnyJhB3duDSO62j+xB/D74gPcApY1iByG7aKL22Hf1AaS2ks\nQlY4WJpRkbZ28ldDizqyMQKBgHqkh8QIBERSui5CxMq0NaC7qbutTr1g6U0iqpyM\n5Y/WOCnEPcDt8uRP7f7Gkb+LIGO1ZkmKHfnOpS0Zr+IIVZfQuwkDHQP0/CUC86VS\nPyLZxqEuV+XJkgsTJsjpDCG2kryIiuKoVdI35wTotumttBQYjQYMRXVWfgN/b82n\n2zHJAoGACPvt5SfGHCkQvw9ub54voKEOdKsc8MUJTsniEhz53tCa8Q5lcC19vjOe\nMJsv57nSpLvf4nIZTY5xBS85YR2Eyb2cm/4Z7+6EOG+ooOk3QlUuGQ+oZY4O78IL\n1ZqOdBxV8+LfO07xphufG6pHzfzk1LthqN8tTszok0cDzk397Ys=\n-----END RSA PRIVATE KEY-----",
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAktxPwsGQo9Ubm9E7QCdR\n8tjHUYoeSa6fmrX36Xnm869YhHDmMfD9nJqaO++BK8jpCgIQ9jqAJRAJcRXJmkIs\nFEkZMyMyS9FqkxmBJ2Z814oxY2cd/AJbF4gw5V4x4S7BPNc1MXVjItmH6XAYsCTA\nyhkIFjS1VdWPBTgKjfSpvONWsI8cRpsnqi9jxsYGm7f1BaKx4idzhdommlL+ySAA\nJAc8TeBHw1mJiNGZSAYqkGJj7VGCRsWbMzgYw0hvsfyfa5N1Br69O46TTEwknXMr\n0Ll8hMVqnHggO04DRMErNQcfSfQjd5gr01r6ZtPKBLVv6ppIrBluj7nwwKZ3FD6N\nBQIDAQAB\n-----END PUBLIC KEY-----"
+}
+```
+
+## encrypt : 
+
+- endpoint : `/encrypt/`
+- METHOD : `POST`
+
+encrypts a plaintext data and returns the ciphertext in base64 encoded form :
+
+#### Request :
+
+```json
+{
+	"plain_text_data":"Attack at noon 12 pm",
+	"public_key":"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAktxPwsGQo9Ubm9E7QCdR\n8tjHUYoeSa6fmrX36Xnm869YhHDmMfD9nJqaO++BK8jpCgIQ9jqAJRAJcRXJmkIs\nFEkZMyMyS9FqkxmBJ2Z814oxY2cd/AJbF4gw5V4x4S7BPNc1MXVjItmH6XAYsCTA\nyhkIFjS1VdWPBTgKjfSpvONWsI8cRpsnqi9jxsYGm7f1BaKx4idzhdommlL+ySAA\nJAc8TeBHw1mJiNGZSAYqkGJj7VGCRsWbMzgYw0hvsfyfa5N1Br69O46TTEwknXMr\n0Ll8hMVqnHggO04DRMErNQcfSfQjd5gr01r6ZtPKBLVv6ppIrBluj7nwwKZ3FD6N\nBQIDAQAB\n-----END PUBLIC KEY-----"
+}
+```
+
+
+#### Response :
+
+
+```json
+{
+    "encoded_ciphertext": "Y2IPs1IitWREm0U9Ltzd1rkQcSRiwg0wDDbiDSBJwPokEMVhIJ0w1EuAoOzO+AyttovWGC25iZ3MDgVen29XAL8wbN42urQ54lpzeK1YnFh7oyWZGxo7+2w52S0WI8oGLKZyrfNFBAJB0kUBxb1xB6tORYGJErHiJBZNmivr8JIfSA0R/gDR2ImQ+ivdM71TaUDtVWz228MzWVsXiZOx+CjfG284rHFD1V79Rbntqi21YlCzEJHrn4i/v0mFdCEELl2IH1mYRVfnAwPB4SwuIjpa0Z9xij5J2Q83Qi/jWxP5VQPzpM72ahNXM1g5VNe8xzIN0heJL7b0gUy63RDYLA=="
+}
+```
+
+## decrypt : 
+
+- endpoint : `/decrypt/`
+- METHOD : `POST`
+
+decrypts a base64 encoded ciphertext and returns the plain text data  :
+
+#### Request :
+
+```json
+{
+	"encoded_ciphertext":"Y2IPs1IitWREm0U9Ltzd1rkQcSRiwg0wDDbiDSBJwPokEMVhIJ0w1EuAoOzO+AyttovWGC25iZ3MDgVen29XAL8wbN42urQ54lpzeK1YnFh7oyWZGxo7+2w52S0WI8oGLKZyrfNFBAJB0kUBxb1xB6tORYGJErHiJBZNmivr8JIfSA0R/gDR2ImQ+ivdM71TaUDtVWz228MzWVsXiZOx+CjfG284rHFD1V79Rbntqi21YlCzEJHrn4i/v0mFdCEELl2IH1mYRVfnAwPB4SwuIjpa0Z9xij5J2Q83Qi/jWxP5VQPzpM72ahNXM1g5VNe8xzIN0heJL7b0gUy63RDYLA==",
+	"private_key":"-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEAktxPwsGQo9Ubm9E7QCdR8tjHUYoeSa6fmrX36Xnm869YhHDm\nMfD9nJqaO++BK8jpCgIQ9jqAJRAJcRXJmkIsFEkZMyMyS9FqkxmBJ2Z814oxY2cd\n/AJbF4gw5V4x4S7BPNc1MXVjItmH6XAYsCTAyhkIFjS1VdWPBTgKjfSpvONWsI8c\nRpsnqi9jxsYGm7f1BaKx4idzhdommlL+ySAAJAc8TeBHw1mJiNGZSAYqkGJj7VGC\nRsWbMzgYw0hvsfyfa5N1Br69O46TTEwknXMr0Ll8hMVqnHggO04DRMErNQcfSfQj\nd5gr01r6ZtPKBLVv6ppIrBluj7nwwKZ3FD6NBQIDAQABAoIBAB/6NKvVdecWegJ9\nlocriJ52MUBB8MJecYZAZRDDaFRbM8zywEzTioVU7IxsZBXik0uIk6TprAll6ohj\nFBiwm+R23jPSUBtOKASLoyGvITPVdVeNlmvPH4KKNwtabUX45j6XJY/1XXazIvLj\nY5zHA+t9c9NR+sIL1C5wu2uZgHQOP9sJYkUSbzJ92nq5EuW0K3SRP/d0hj4ue1lC\n2LeUU9F+OTGPA0kdlIPnuhoT/HzPYof/aHhYQnd9Y0VY9MyECulOTF3vrPvGikHu\n/frqtaB+PtBJD4v1hWJAXmv58mw6dKtuo3V1R7yP+Fe53olMRTCqLp8vreveZdj0\ng9ZDXoECgYEAwK+0z8Vi4O9Pzv//Z5bmoBhhqqM4xH09di9cvHsp3NriLgnmv9RK\neZXl5mAcxDbDEGa/ay/YDsYpzx18uXlwT8depuvlWhGsUErG0M5B8oBQnyYD42EE\nn3dYJb+nYtKMFOO3wI6lcztjRRSGUq83c2yrTPxKsI9vxj0dK0GAO3ECgYEAwx3b\nYz6B3DkdRsOgYWZa1kJPw+MuBDLmpSgB4mQdwnNEOQB7U+gCzFNJ4eApAQMeh+KH\n5FxFFHMWD1SPgOCqB5I+rYWpXTeri4KFXWQLN7/s4LKJanBIUN7WrInLV9PhPr/g\nDXF9+9WmUUJVGpCJB0ZeFCr59QMwsl12MbBimNUCgYAtILmzM6J91e6WJ4S0yTXI\nZw1wvnuMIVzksiEBD8N1M1pnt+/wG5M5uK64bugt2DmFPNs2CmWKyESAeoJ8mgGA\n3cvAQl1b4+m8gFbiDnyJhB3duDSO62j+xB/D74gPcApY1iByG7aKL22Hf1AaS2ks\nQlY4WJpRkbZ28ldDizqyMQKBgHqkh8QIBERSui5CxMq0NaC7qbutTr1g6U0iqpyM\n5Y/WOCnEPcDt8uRP7f7Gkb+LIGO1ZkmKHfnOpS0Zr+IIVZfQuwkDHQP0/CUC86VS\nPyLZxqEuV+XJkgsTJsjpDCG2kryIiuKoVdI35wTotumttBQYjQYMRXVWfgN/b82n\n2zHJAoGACPvt5SfGHCkQvw9ub54voKEOdKsc8MUJTsniEhz53tCa8Q5lcC19vjOe\nMJsv57nSpLvf4nIZTY5xBS85YR2Eyb2cm/4Z7+6EOG+ooOk3QlUuGQ+oZY4O78IL\n1ZqOdBxV8+LfO07xphufG6pHzfzk1LthqN8tTszok0cDzk397Ys=\n-----END RSA PRIVATE KEY-----"
+}
+```
+
+
+#### Response :
+
+
+```json
+{
+    "plain_text_data": "Attack at noon 12 pm"
+}
+```

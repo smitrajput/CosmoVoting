@@ -1,0 +1,18 @@
+version: "3.5"
+networks:
+ db_nw:
+  external: true
+  name: db_nw
+services:
+ djangoapp:
+  image: "djangoapp:latest"
+  hostname: "djangoapp"
+  build: 
+   context: ./
+   dockerfile: Dockerfile
+  networks:
+  - db_nw
+  volumes:
+  - '/home/akash/Music/excalibur/django:/election'
+  ports:
+  - 8000:8000
