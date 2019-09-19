@@ -8,5 +8,6 @@
 4. Fire another terminal in the same folder, create a python3 virtual environment using `python3 -m venv ./venvs/django`
 5. In the same terminal, start the virtual environment using `source ./venvs/django/bin/activate`
 6. After making sure pip, python, django are installed in the virtual environment too, run `pip3 install -r requirements.txt`
-6. To start the Django server, `cd ./django/vote`, followed by `python manage.py runserver`
-7. Now, fire up a new terminal and type in `npm start` to start the Voting DApp.
+7. `pip install wheel`
+8. To start the Django server, `cd ./django/vote`, followed by `python manage.py runserver`
+9. Now, fire up a new terminal and type in `npm start` to start the Voting DApp.
