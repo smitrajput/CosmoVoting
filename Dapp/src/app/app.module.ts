@@ -25,7 +25,7 @@ import {
   MatMenuModule,
   MatChipsModule
 } from "@angular/material";
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from "@angular/material/datepicker";
 import { AppComponent } from "./app.component";
 import { MetaModule } from "./meta/meta.module";
 import { CommonModule } from "@angular/common";
@@ -39,7 +39,9 @@ import { AdminComponent } from "./admin/admin.component";
 import { HomeComponent } from "./home/home.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
-import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
+import { KycVerifierComponent } from "./kyc-verifier/kyc-verifier.component";
+import { CarouselsComponent } from "./carousels/carousels.component";
+//import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
     HomeComponent,
     DashboardComponent,
     UserLoginComponent,
-    KycVerifierComponent
+    KycVerifierComponent,
+    CarouselsComponent
+    // LandingComponent
   ],
   imports: [
     BrowserAnimationsModule,

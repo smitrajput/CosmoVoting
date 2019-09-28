@@ -1,15 +1,15 @@
 {
   "contractName": "SafeMath",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/desciple/Amaal/Excalibur-code-fun-do/VoteX/Dapp/contracts/VoterData.sol\":\"SafeMath\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/desciple/Amaal/Excalibur-code-fun-do/VoteX/Dapp/contracts/VoterData.sol\":{\"keccak256\":\"0x87cd140ccda7d9f25da813d12cbffea119c956aca0198c8f5e4467a185aa3239\",\"urls\":[\"bzzr://16924bc00d4c2e10d0023955f9d49be24107363d61055c7009e53c26a544d9fb\"]}},\"version\":1}",
-  "bytecode": "0x604c6023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a723058204b85f38ce222e928adb999c9e4039cf7085837d7fd65c1e1acfdf58a288a5a2d0029",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a723058204b85f38ce222e928adb999c9e4039cf7085837d7fd65c1e1acfdf58a288a5a2d0029",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/smitrajput/Projects/VoteX/Dapp/contracts/VoterData.sol\":\"SafeMath\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/smitrajput/Projects/VoteX/Dapp/contracts/VoterData.sol\":{\"keccak256\":\"0x87cd140ccda7d9f25da813d12cbffea119c956aca0198c8f5e4467a185aa3239\",\"urls\":[\"bzzr://16924bc00d4c2e10d0023955f9d49be24107363d61055c7009e53c26a544d9fb\"]}},\"version\":1}",
+  "bytecode": "0x604c6023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a723058207ce449fb69fc2d2658cccf82f1b67ac7f8ab418c95164e4bb44ec9d848587b5f0029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a723058207ce449fb69fc2d2658cccf82f1b67ac7f8ab418c95164e4bb44ec9d848587b5f0029",
   "sourceMap": "2399:290:2:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
   "deployedSourceMap": "2399:290:2:-;;;;;;;;",
   "source": "pragma solidity ^0.5.0;\n\n\ncontract VoterData {\n    \n    struct Voter {\n        string Name;\n        uint256 dob;\n        string voterId;\n        address verifier;\n        uint256 verificationTime;\n    }\n\n    address public EC_Head;\n    mapping(address => bool) public kyc_verifiers;\n    mapping(address => bool) public ec_officials;\n\n    mapping(bytes32 => Voter) public voters;\n    // mapping(uint256 => Voter) public voters;\n\n    uint256 public verified_voter_count;\n   \n    using SafeMath for uint256;\n    \n    modifier onlyEcHead {\n        require((msg.sender == EC_Head), \"You are not Authorized to make this function Call.\");\n        _;\n    }\n    modifier onlyEcOfficial {\n        require((ec_officials[msg.sender]), \"You are not Authorized to make this function Call.\");\n        _;\n    }\n    modifier onlyKycVerifier {\n        require((kyc_verifiers[msg.sender]), \"You are not Authorized to make this function Call.\");\n        _;\n    }\n\n   constructor() public {  \n\t\n    EC_Head = msg.sender;\n    ec_officials[msg.sender] = true;\n    kyc_verifiers[msg.sender] = true;\n    verified_voter_count = 0;\n\n    }  \n\n    function addEcOfficial (address official) public onlyEcHead {\n        ec_officials[official] = true;\n    }\n    function removeEcOfficial(address official) public onlyEcHead {\n        ec_officials[official] = false;\n        delete ec_officials[official];\n    }\n    function addKycVerifier (address verifier) public onlyEcOfficial {\n        kyc_verifiers[verifier] = true;\n    }\n    function removeKycVerifier(address verifier) public onlyEcOfficial {\n        kyc_verifiers[verifier] = false;\n        delete kyc_verifiers[verifier];\n    }\n    \n    function kycVerify(bytes32  uuid_hash, string memory name, uint256 dob, uint256 current_timestamp) public onlyKycVerifier {\n        Voter memory voter = Voter(name, dob, \"\", msg.sender, current_timestamp);\n        voters[uuid_hash] = voter;\n        verified_voter_count++;\n    }\n\n    function generateVoterId(bytes32 uuid_hash, string memory voterId, uint256 current_timestamp) public {\n        \n        Voter memory voter = voters[uuid_hash];\n        uint256 dob = voter.dob;\n        uint256 age = (current_timestamp - dob)/(1000*60*60*24*365);\n        \n        require(age >= 18, \"Not Allowed to Vote. Only eligible to vote if age is above 18 years.\"); \n        voter.voterId = voterId;\n        voters[uuid_hash] = voter;\n\n    }\n}\n\nlibrary SafeMath { \n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n      assert(b <= a);\n      return a - b;\n    }\n    \n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n      uint256 c = a + b;\n      assert(c >= a);\n      return c;\n    }\n\n}\n",
-  "sourcePath": "/home/desciple/Amaal/Excalibur-code-fun-do/VoteX/Dapp/contracts/VoterData.sol",
+  "sourcePath": "/Users/smitrajput/Projects/VoteX/Dapp/contracts/VoterData.sol",
   "ast": {
-    "absolutePath": "/home/desciple/Amaal/Excalibur-code-fun-do/VoteX/Dapp/contracts/VoterData.sol",
+    "absolutePath": "/Users/smitrajput/Projects/VoteX/Dapp/contracts/VoterData.sol",
     "exportedSymbols": {
       "SafeMath": [
         821
@@ -3817,7 +3817,7 @@
     "src": "0:2690:2"
   },
   "legacyAST": {
-    "absolutePath": "/home/desciple/Amaal/Excalibur-code-fun-do/VoteX/Dapp/contracts/VoterData.sol",
+    "absolutePath": "/Users/smitrajput/Projects/VoteX/Dapp/contracts/VoterData.sol",
     "exportedSymbols": {
       "SafeMath": [
         821
@@ -7629,8 +7629,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.13",
-  "updatedAt": "2019-09-19T10:20:34.660Z",
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-09-23T10:37:44.247Z",
   "devdoc": {
     "methods": {}
   },
