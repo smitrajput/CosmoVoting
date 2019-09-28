@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
-          First-past-the-post
+        <div class="card-header" style="text-align: center">
+          First-Past-The-Post
           <div class="card-header-actions">
             <a
               href="https://valor-software.com/ngx-bootstrap/#/carousel"
@@ -42,9 +42,8 @@
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
-          Two-round-system
-          <small> optional captions</small>
+        <div class="card-header" style="text-align: center">
+          Two-Round-System
         </div>
         <div class="card-body">
           <carousel [interval]="false">
@@ -94,9 +93,8 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
-          Instant run-off
-          <small> configuring defaults</small>
+        <div class="card-header" style="text-align: center">
+          Instant Run-Off
         </div>
         <div class="card-body">
           <carousel [interval]="false">
@@ -144,9 +142,8 @@
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="text-align: center">
           Majority Bonus System
-          <small> dynamic slides</small>
         </div>
         <div class="card-body">
           <carousel
@@ -167,8 +164,7 @@
               </div>
             </slide>
           </carousel>
-          <br />
-          <div>
+          <!-- <div>
             <button type="button" class="btn btn-info" (click)="addSlide()">
               Add Slide
             </button>
@@ -178,8 +174,8 @@
             <button type="button" class="btn btn-info" (click)="removeSlide(2)">
               Remove #3
             </button>
-          </div>
-          <div>
+          </div> -->
+          <!-- <div>
             <div class="checkbox">
               <label
                 ><input type="checkbox" [(ngModel)]="noWrapSlides" />Disable
@@ -196,7 +192,7 @@
               class="form-control"
               [(ngModel)]="myInterval"
             />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -205,9 +201,8 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="text-align: center">
           Plurality-At-Large
-          <small> configuring defaults</small>
         </div>
         <div class="card-body">
           <carousel [interval]="false">
@@ -255,9 +250,8 @@
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="text-align: center">
           General Ticket
-          <small> dynamic slides</small>
         </div>
         <div class="card-body">
           <carousel
@@ -278,8 +272,7 @@
               </div>
             </slide>
           </carousel>
-          <br />
-          <div>
+          <!-- <div>
             <button type="button" class="btn btn-info" (click)="addSlide()">
               Add Slide
             </button>
@@ -307,7 +300,322 @@
               class="form-control"
               [(ngModel)]="myInterval"
             />
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Single Non-Transferable Vote
+          <div class="card-header-actions">
+            <a
+              href="https://valor-software.com/ngx-bootstrap/#/carousel"
+              target="_blank"
+            >
+            </a>
           </div>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Cumulative Voting
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>First slide label</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Third slide label</h3>
+                <p>
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur.
+                </p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Borda
+          <div class="card-header-actions">
+            <a
+              href="https://valor-software.com/ngx-bootstrap/#/carousel"
+              target="_blank"
+            >
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Party-List Proportional Representation
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>First slide label</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Third slide label</h3>
+                <p>
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur.
+                </p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Single Transferable Vote
+          <div class="card-header-actions">
+            <a
+              href="https://valor-software.com/ngx-bootstrap/#/carousel"
+              target="_blank"
+            >
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Mixed-Member Proportional Representation
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>First slide label</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/technics/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Third slide label</h3>
+                <p>
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur.
+                </p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header" style="text-align: center">
+          Parallel Voting
+          <div class="card-header-actions">
+            <a
+              href="https://valor-software.com/ngx-bootstrap/#/carousel"
+              target="_blank"
+            >
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <carousel [interval]="false">
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/1"
+                alt="First slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/2"
+                alt="Second slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+            <slide>
+              <img
+                src="https://lorempixel.com/900/500/nature/3"
+                alt="Third slide"
+                style="display: block; width: 100%;"
+              />
+            </slide>
+          </carousel>
         </div>
       </div>
     </div>
