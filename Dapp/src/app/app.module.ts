@@ -41,6 +41,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { KycVerifierComponent } from "./kyc-verifier/kyc-verifier.component";
 import { CarouselsComponent } from "./carousels/carousels.component";
+import { CarouselModule } from "ngx-bootstrap/carousel";
 //import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
@@ -87,7 +88,8 @@ import { CarouselsComponent } from "./carousels/carousels.component";
     MatSortModule,
     MatGridListModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    CarouselModule.forRoot()
   ],
   providers: [MatMomentDateModule],
   bootstrap: [AppComponent]
