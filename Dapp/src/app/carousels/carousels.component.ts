@@ -1,5 +1,8 @@
 import { Component, OnDestroy } from "@angular/core";
 import { CarouselConfig } from "ngx-bootstrap/carousel";
+import { Router } from "@angular/router";
+import Torus from "@toruslabs/torus-embed";
+import Web3 from "web3";
 
 @Component({
   templateUrl: "carousels.component.html",
@@ -12,11 +15,38 @@ export class CarouselsComponent implements OnDestroy {
   slides: any[] = [];
   activeSlideIndex: number = 0;
   noWrapSlides: boolean = false;
+  web3: any;
+  torus: any;
+  userInfo: any;
 
-  constructor() {
+  constructor(private router: Router) {
     for (let i = 0; i < 4; i++) {
       this.addSlide();
     }
+  }
+
+  async ngOnInit() {
+    this.torus = new Torus({
+      buttonPosition: "top-right" // default: bottom-left
+    });
+
+    await this.torus.init({
+      buildEnv: "development", // default: production
+      enableLogging: true, // default: false
+      network: {
+        host: "https://ethboston1.skalenodes.com:10062", // default: mainnet
+        chainId: 1, // default: 1
+        networkName: "Skale Network" // default: Main Ethereum Network
+      },
+      showTorusButton: true // default: true
+    });
+    await this.torus.login(); // await torus.ethereum.enable()
+    this.web3 = new Web3(this.torus.provider);
+
+    this.userInfo = await this.torus.getUserInfo();
+    console.log(this.userInfo);
+
+    this.torus.showWallet();
   }
 
   ngOnDestroy(): void {
@@ -36,5 +66,9 @@ export class CarouselsComponent implements OnDestroy {
   removeSlide(index?: number): void {
     const toRemove = index ? index : this.activeSlideIndex;
     this.slides.splice(toRemove, 1);
+  }
+
+  redirect() {
+    this.router.navigate(["./home"]);
   }
 }
