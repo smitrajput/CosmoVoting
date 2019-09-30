@@ -25,34 +25,62 @@ export class CarouselsComponent implements OnDestroy {
     }
   }
 
-  async ngOnInit() {
+  // async ngOnInit() {
+  //   this.torus = new Torus({
+  //     buttonPosition: "bottom-left"
+  //   });
+
+  //   await this.torus.init({
+  //     buildEnv: "development", // default: production
+  //     enableLogging: true, // default: false
+  //     network: {
+  //       host: "localhost", // default: mainnet
+  //       chainId: 1977, // default: 1
+  //       networkName: "Ganache" // default: Main Ethereum Network
+  //     },
+  //     showTorusButton: true // default: true
+  //   });
+
+  //   this.torus.setProvider({ host: "localhost" });
+
+  //   await this.torus.login(); // await torus.ethereum.enable()
+  //   this.web3 = new Web3(this.torus.provider);
+
+  //   this.userInfo = await this.torus.getUserInfo();
+  //   console.log("ji", this.userInfo);
+
+  //   this.torus.showWallet();
+  // }
+
+  async ngOnDestroy() {
+    this.myInterval = 0;
+    this.noWrapSlides = true;
+    this.myInterval = false;
+
     this.torus = new Torus({
-      buttonPosition: "top-right" // default: bottom-left
+      buttonPosition: "bottom-left"
     });
 
     await this.torus.init({
-      buildEnv: "development", // default: production
+      buildEnv: "production", // default: production
       enableLogging: true, // default: false
       network: {
-        host: "https://ethboston1.skalenodes.com:10062", // default: mainnet
-        chainId: 1, // default: 1
-        networkName: "Skale Network" // default: Main Ethereum Network
+        host: "localhost", // default: mainnet
+        chainId: 1977, // default: 1
+        networkName: "Ganache" // default: Main Ethereum Network
       },
       showTorusButton: true // default: true
     });
+
+    // this.torus.setProvider({ host: "localhost" });
+
     await this.torus.login(); // await torus.ethereum.enable()
     this.web3 = new Web3(this.torus.provider);
 
     this.userInfo = await this.torus.getUserInfo();
-    console.log(this.userInfo);
+    console.log("ji", this.userInfo);
 
     this.torus.showWallet();
-  }
-
-  ngOnDestroy(): void {
-    this.myInterval = 0;
-    this.noWrapSlides = true;
-    this.myInterval = false;
   }
 
   addSlide(): void {

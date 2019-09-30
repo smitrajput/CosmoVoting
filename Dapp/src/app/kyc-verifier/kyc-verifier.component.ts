@@ -5,17 +5,16 @@ import { Router } from "@angular/router";
 import { Web3Service } from "../util/web3.service";
 import Web3 from "web3";
 import voterdata_artifact from "../../../build/contracts/VoterData.json";
+import Torus from "@toruslabs/torus-embed";
 import moment from "moment";
 
 const network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "http://localhost:8546/",
   NETWORK_ID: 1
 };
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(network_config.RPC_PROVIDER)
-);
+// const web3 = Web3Service.web3;
 
 @Component({
   selector: "app-kyc-verifier",
@@ -24,6 +23,8 @@ const web3 = new Web3(
 })
 export class KycVerifierComponent implements OnInit {
   VoterDataInstance: any;
+  torus: any;
+  web3: any;
 
   // Dummy verifier (in actual practice, login mechanism would be used)
   verifier = {
@@ -52,15 +53,36 @@ export class KycVerifierComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private web3Service: Web3Service
-  ) { }
+  ) {}
 
   async ngOnInit() {
     console.log("OnInit: " + this.web3Service);
     console.log(this);
     this.getVoterList();
+
+    this.torus = new Torus({
+      buttonPosition: "bottom-left"
+    });
+
+    await this.torus.init({
+      buildEnv: "production", // default: production
+      enableLogging: true, // default: false
+      network: {
+        host: "localhost", // default: mainnet
+        chainId: 1977, // default: 1
+        networkName: "Ganache" // default: Main Ethereum Network
+      },
+      showTorusButton: true // default: true
+    });
+
+    // this.torus.setProvider({ host: "localhost" });
+
+    await this.torus.login(); // await torus.ethereum.enable()
+    this.web3 = new Web3(this.torus.provider);
+
     this.watchAccount();
-    this.model.accounts = await web3.eth.getAccounts();
-    console.log(this.model.accounts);
+    this.model.accounts = await this.web3.eth.getAccounts();
+    // console.log("ji", this.web3Service.web3);
     this.model.primary_account = this.model.accounts[0];
 
     this.web3Service
@@ -99,37 +121,38 @@ export class KycVerifierComponent implements OnInit {
 
     let voter_dob = new Date(voter.dob).getTime();
     let current_time = new Date().getTime();
-    let uuidHash = web3.utils.soliditySha3(voter.uuid);
+    let uuidHash = this.web3.utils.soliditySha3(voter.uuid);
 
     try {
       // Get the nonce & post data to the blockchain
-      const nonce = await this.web3Service.getNonce(this.model.primary_account);
+      const nonce = await this.web3Service.getNonce(
+        this.model.primary_account,
+        { msg: "fetching nonce" }
+      );
       console.log("Got nonce: ", nonce);
       console.log("account from : ", this.model.primary_account);
-      this.VoterDataInstance.kycVerify.sendTransaction(uuidHash, voter.name, voter_dob, current_time, { from: this.model.primary_account, nonce: nonce })
+      this.VoterDataInstance.kycVerify
+        .sendTransaction(uuidHash, voter.name, voter_dob, current_time, {
+          from: this.model.primary_account,
+          nonce: nonce
+        })
         .then((res, err) => {
           if (err !== undefined) {
             console.error("Error!!!!", err);
             this.setStatus("Error: Unable to verify! Please try again later");
             // voter.verification_status = "unverified";
-          }
-          else {
+          } else {
             console.log(res.receipt.status);
             if (res.receipt.status == true) {
               console.log("receipt : ", res.receipt);
               this.updateVerificationStatusDB(voter.name, voter.uuid);
-            }
-            else {
+            } else {
               console.log("transaction failed. check receipt : ", res.receipt);
               this.setStatus("Error: Unable to verify! Please try again later");
-
             }
-
           }
-        }
-        );
-    }
-    catch (err) {
+        });
+    } catch (err) {
       console.log("Error!!", err);
       this.setStatus("Error: Unable to verify! Please try again later");
     }
@@ -168,6 +191,6 @@ export class KycVerifierComponent implements OnInit {
   }
 
   home() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
   }
 }
