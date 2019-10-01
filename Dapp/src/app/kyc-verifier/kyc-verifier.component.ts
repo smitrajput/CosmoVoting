@@ -10,7 +10,7 @@ import moment from "moment";
 
 const network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8546/",
+  RPC_PROVIDER: "http://localhost:8545/",
   NETWORK_ID: 1
 };
 
@@ -125,12 +125,10 @@ export class KycVerifierComponent implements OnInit {
 
     try {
       // Get the nonce & post data to the blockchain
-      const nonce = await this.web3Service.getNonce(
-        this.model.primary_account,
-        { msg: "fetching nonce" }
-      );
+      const nonce = await this.web3Service.getNonce(this.model.primary_account);
       console.log("Got nonce: ", nonce);
       console.log("account from : ", this.model.primary_account);
+      console.log(this.VoterDataInstance);
       this.VoterDataInstance.kycVerify
         .sendTransaction(uuidHash, voter.name, voter_dob, current_time, {
           from: this.model.primary_account,

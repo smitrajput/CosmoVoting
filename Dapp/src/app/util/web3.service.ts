@@ -37,7 +37,7 @@ export class Web3Service {
         buildEnv: "production", // default: production
         enableLogging: true, // default: false
         network: {
-          host: "localhost", // default: mainnet
+          host: "https://localhost:8545", // default: mainnet
           chainId: 1977, // default: 1
           networkName: "Ganache" // default: Main Ethereum Network
         },
@@ -115,7 +115,7 @@ export class Web3Service {
     }
 
     const contractAbstraction = contract(artifacts);
-    contractAbstraction.setProvider(this.torus.provider);
+    contractAbstraction.setProvider(window.web3.currentProvider);
     return contractAbstraction;
   }
 
@@ -181,7 +181,9 @@ export class Web3Service {
 
   // Get the Nonce of an account
   public async getNonce(account) {
-    const nonce = await window.web3.eth.getTransactionCount(account);
+    const nonce = await window.web3.eth
+      .getTransactionCount(account)
+      .then(args => console.log("Huuu"));
     return nonce;
   }
 }
