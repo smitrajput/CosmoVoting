@@ -9,7 +9,7 @@ import voterdata_artifact from "../../../build/contracts/VoterData.json";
 import moment from "moment";
 
 const network_config = {
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "https://localhost:8545/",
   NETWORK_ID: 1
 };
 

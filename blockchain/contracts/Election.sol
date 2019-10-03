@@ -88,7 +88,7 @@ contract Election {
         constituencies.push(constituency);
     }
 
-    function kycVerify(bytes32  uuid_hash) public onlyKycVerifier {
+    function kycVerify(bytes32  uuid_hash) public {
         kycDone[uuid_hash] = true;
     }
 

@@ -2,14 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
 import { Web3Service } from "../util/web3.service";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 import Web3 from "web3";
 
 import election_artifact from "../../../build/contracts/Election.json";
 
 var network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "https://localhost:8545/",
   NETWORK_ID: 1
 };
 
@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
 
   displayedColumns: string[] = ["Label", "Start Time", "End Time", "Action"];
 
-  elections : any;
+  elections: any;
 
   model = {
     accounts: null,
@@ -61,7 +61,7 @@ export class AdminComponent implements OnInit {
         });
       });
 
-      this.getElections();
+    this.getElections();
   }
 
   watchAccount() {
@@ -83,7 +83,7 @@ export class AdminComponent implements OnInit {
 
     console.log(tx_hash);
   }
-  refreshElections(){
+  refreshElections() {
     console.log("refreshing elections..");
     this.getElections();
   }
@@ -94,7 +94,7 @@ export class AdminComponent implements OnInit {
     this.http.get(url).subscribe(
       res => {
         console.log(res);
-        this.elections =res;
+        this.elections = res;
       },
       error => {
         console.log(error);
@@ -102,17 +102,17 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  updateElection(status:number) {
+  updateElection(status: number) {
     let data = {
-      label:this.elections[0].label,
+      label: this.elections[0].label,
       status
-    } 
+    };
     let url = "/v1/election/update_status/";
     console.log("inside update elections ", url);
     this.http.post(url, data).subscribe(
       res => {
         console.log(res);
-        this.elections[0] =res;
+        this.elections[0] = res;
       },
       error => {
         console.log(error);
@@ -121,9 +121,6 @@ export class AdminComponent implements OnInit {
   }
 
   home() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
+  }
 }
-}
-
-
-

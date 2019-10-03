@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Injectable } from "@angular/core";
 import { CarouselConfig } from "ngx-bootstrap/carousel";
 import { Router } from "@angular/router";
 import Torus from "@toruslabs/torus-embed";
@@ -57,30 +57,31 @@ export class CarouselsComponent implements OnDestroy {
     this.noWrapSlides = true;
     this.myInterval = false;
 
-    this.torus = new Torus({
-      buttonPosition: "bottom-left"
-    });
+    // this.torus = new Torus({
+    //   buttonPosition: "bottom-left"
+    // });
 
-    await this.torus.init({
-      buildEnv: "production", // default: production
-      enableLogging: true, // default: false
-      network: {
-        host: "localhost", // default: mainnet
-        chainId: 1977, // default: 1
-        networkName: "Ganache" // default: Main Ethereum Network
-      },
-      showTorusButton: true // default: true
-    });
+    // await this.torus.init({
+    //   buildEnv: "production", // default: production
+    //   enableLogging: true, // default: false
+    //   network: {
+    //     host: "localhost", // default: mainnet
+    //     chainId: 1977, // default: 1
+    //     networkName: "Ganache" // default: Main Ethereum Network
+    //   },
+    //   showTorusButton: true // default: true
+    // });
 
-    // this.torus.setProvider({ host: "localhost" });
+    // // this.torus.setProvider({ host: "localhost" });
 
-    await this.torus.login(); // await torus.ethereum.enable()
-    this.web3 = new Web3(this.torus.provider);
+    // await this.torus.login(); // await torus.ethereum.enable()
+    // this.web3 = new Web3(this.torus.provider);
 
-    this.userInfo = await this.torus.getUserInfo();
-    console.log("ji", this.userInfo);
+    // this.userInfo = await this.torus.getUserInfo();
+    // console.log("ji", this.userInfo);
 
-    this.torus.showWallet();
+    // this.torus.showWallet();
+    console.log("ONDESTROY");
   }
 
   addSlide(): void {

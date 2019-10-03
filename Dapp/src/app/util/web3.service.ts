@@ -1,20 +1,24 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import contract from "truffle-contract";
 import { Subject } from "rxjs";
 declare let require: any;
 const Web3 = require("web3");
 import Torus from "@toruslabs/torus-embed";
 import { HttpClientModule } from "@angular/common/http";
+import voterdata_artifact from "../../../build/contracts/VoterData.json";
+import { CarouselsComponent } from "../carousels/carousels.component";
 
 declare let window: any;
 
 @Injectable()
 export class Web3Service {
   public web3: any;
-  private accounts: string[];
+  accounts: string[];
   public ready = false;
   public uuid: number;
   torus: any;
+  VoterDataInstance: any;
+
   // public election_status = 0;
   public election = {
     label: "Test Election",
@@ -22,12 +26,13 @@ export class Web3Service {
     end_time: "May 21, 2019",
     status: 0 // 0 - yet to start, 1- ongoing, 2 - completed
   };
+
   public election_label: string;
 
   public accountsObservable = new Subject<string[]>();
 
   constructor() {
-    window.addEventListener("load", async () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       // Modern dapp browsers...
       this.torus = new Torus({
         buttonPosition: "bottom-left"
@@ -37,7 +42,7 @@ export class Web3Service {
         buildEnv: "production", // default: production
         enableLogging: true, // default: false
         network: {
-          host: "https://localhost:8545", // default: mainnet
+          host: "localhost", // default: mainnet
           chainId: 1977, // default: 1
           networkName: "Ganache" // default: Main Ethereum Network
         },
@@ -46,15 +51,16 @@ export class Web3Service {
 
       // this.torus.setProvider({ host: "localhost" });
 
-      await this.torus.login(); // await torus.ethereum.enable()
-      if (this.torus.provider) {
-        window.web3 = new Web3(this.torus.provider);
+      await this.torus.ethereum.enable(); // await this.torus.login();
+
+      if (this.torus.ethereum) {
+        window.web3 = new Web3(this.torus.ethereum);
         try {
           // Request account access if needed
           // await window.ethereum.enable();
           // Acccounts now exposed
-          console.log("inside window ethereum");
-          console.log(window.web3);
+          // console.log("inside window ethereum");
+          // console.log(window.web3);
           // this.web3.eth.sendTransaction({/* ... */ });
         } catch (error) {
           // User denied account access...
@@ -76,8 +82,49 @@ export class Web3Service {
         );
       }
       this.torus.showWallet();
+
+      window.web3 = new Web3(this.torus.ethereum);
+      console.log("WINDOW.WEB3", window.web3);
+      this.createVoterDataInstance();
     });
-    setInterval(() => this.refreshAccounts(), 100000);
+    this.refreshAccounts();
+    setInterval(() => this.refreshAccounts(), 4000);
+  }
+
+  // ngOnInit() {
+  //   this.torus = new Torus({
+  //     buttonPosition: "bottom-left"
+  //   });
+  //   console.log("in ngOnInit", this.torus);
+  //   this.torus.init({
+  //     buildEnv: "production", // default: production
+  //     enableLogging: true, // default: false
+  //     network: {
+  //       host: "localhost", // default: mainnet
+  //       chainId: 1977, // default: 1
+  //       networkName: "Ganache" // default: Main Ethereum Network
+  //     },
+  //     showTorusButton: true // default: true
+  //   });
+
+  //   // this.torus.setProvider({ host: "localhost" });
+
+  //   this.torus.ethereum.enable(); // await this.torus.login();
+
+  //   window.web3 = new Web3(this.torus.ethereum);
+  //   console.log("WINDOW.WEB3", window.web3);
+  //   this.createVoterDataInstance();
+  // }
+
+  createVoterDataInstance() {
+    this.artifactsToContract(voterdata_artifact).then((result: any) => {
+      this.VoterDataInstance = result;
+      this.VoterDataInstance.deployed().then(deployed => {
+        console.log("deployed contract : ", deployed);
+        this.VoterDataInstance = deployed;
+        console.log("VDInstance", this.VoterDataInstance);
+      });
+    });
   }
 
   public setElectionLabel(label: string) {
@@ -115,7 +162,7 @@ export class Web3Service {
     }
 
     const contractAbstraction = contract(artifacts);
-    contractAbstraction.setProvider(window.web3.currentProvider);
+    contractAbstraction.setProvider(await this.torus.ethereum);
     return contractAbstraction;
   }
 
@@ -151,6 +198,7 @@ export class Web3Service {
       this.ready = true;
     });
   }
+
   public async sendEth(value, receiver) {
     console.log(" sending eth : " + value + " to " + receiver);
     // await window.web3.eth.getTransactionCount("0x779C680F2dED76249AA2139F9CaC64eA47d68C2D").then(async (nonce) => {
@@ -175,15 +223,15 @@ export class Web3Service {
 
     // return nonce;
   }
-  public getProvider() {
-    return window.web3.currentProvider;
+  public async getProvider() {
+    return await this.torus.ethereum;
   }
 
   // Get the Nonce of an account
   public async getNonce(account) {
-    const nonce = await window.web3.eth
-      .getTransactionCount(account)
-      .then(args => console.log("Huuu"));
+    const nonce = await window.web3.eth.getTransactionCount(account, () =>
+      console.log("DAAL DIYA CALLBACK")
+    );
     return nonce;
   }
 }

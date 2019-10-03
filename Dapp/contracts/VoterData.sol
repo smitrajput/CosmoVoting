@@ -44,22 +44,22 @@ contract VoterData {
 
     }  
 
-    function addEcOfficial (address official) public onlyEcHead {
+    function addEcOfficial (address official) public {
         ec_officials[official] = true;
     }
-    function removeEcOfficial(address official) public onlyEcHead {
+    function removeEcOfficial(address official) public {
         ec_officials[official] = false;
         delete ec_officials[official];
     }
-    function addKycVerifier (address verifier) public onlyEcOfficial {
+    function addKycVerifier (address verifier) public {
         kyc_verifiers[verifier] = true;
     }
-    function removeKycVerifier(address verifier) public onlyEcOfficial {
+    function removeKycVerifier(address verifier) public {
         kyc_verifiers[verifier] = false;
         delete kyc_verifiers[verifier];
     }
     
-    function kycVerify(bytes32  uuid_hash, string memory name, uint256 dob, uint256 current_timestamp) public onlyKycVerifier {
+    function kycVerify(bytes32  uuid_hash, string memory name, uint256 dob, uint256 current_timestamp) public {
         Voter memory voter = Voter(name, dob, "", msg.sender, current_timestamp);
         voters[uuid_hash] = voter;
         verified_voter_count++;

@@ -15,7 +15,7 @@ import election_artifact from "../../../build/contracts/Election.json";
 // }
 const network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "https://localhost:8545/",
   NETWORK_ID: 1
 };
 

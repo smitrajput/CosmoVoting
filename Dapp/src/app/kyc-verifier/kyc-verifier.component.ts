@@ -10,7 +10,7 @@ import moment from "moment";
 
 const network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "https://localhost:8545/",
   NETWORK_ID: 1
 };
 
@@ -25,6 +25,7 @@ export class KycVerifierComponent implements OnInit {
   VoterDataInstance: any;
   torus: any;
   web3: any;
+  std_web3: any;
 
   // Dummy verifier (in actual practice, login mechanism would be used)
   verifier = {
@@ -53,57 +54,82 @@ export class KycVerifierComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private web3Service: Web3Service
-  ) {}
-
-  async ngOnInit() {
-    console.log("OnInit: " + this.web3Service);
-    console.log(this);
-    this.getVoterList();
-
-    this.torus = new Torus({
-      buttonPosition: "bottom-left"
-    });
-
-    await this.torus.init({
-      buildEnv: "production", // default: production
-      enableLogging: true, // default: false
-      network: {
-        host: "localhost", // default: mainnet
-        chainId: 1977, // default: 1
-        networkName: "Ganache" // default: Main Ethereum Network
-      },
-      showTorusButton: true // default: true
-    });
-
-    // this.torus.setProvider({ host: "localhost" });
-
-    await this.torus.login(); // await torus.ethereum.enable()
-    this.web3 = new Web3(this.torus.provider);
-
+  ) {
+    console.log("KYC-V CONSTRUCTOR");
     this.watchAccount();
-    this.model.accounts = await this.web3.eth.getAccounts();
-    // console.log("ji", this.web3Service.web3);
-    this.model.primary_account = this.model.accounts[0];
+    setInterval(() => this.watchAccount(), 4000);
+  }
 
-    this.web3Service
-      .artifactsToContract(voterdata_artifact)
-      .then((result: any) => {
-        this.VoterDataInstance = result;
-        this.VoterDataInstance.deployed().then(deployed => {
-          console.log("deployed contract : ", deployed);
-          this.VoterDataInstance = deployed;
-        });
-      });
+  ngOnInit() {
+    // console.log("OnInit: " + this.web3Service);
+    // console.log(this);
+    this.getVoterList();
+    this.std_web3 = new Web3();
+    // this.torus = new Torus({
+    //   buttonPosition: "bottom-left"
+    // });
+
+    // await this.torus.init({
+    //   buildEnv: "production", // default: production
+    //   enableLogging: true, // default: false
+    //   network: {
+    //     host: "localhost", // default: mainnet
+    //     chainId: 1977, // default: 1
+    //     networkName: "Ganache" // default: Main Ethereum Network
+    //   },
+    //   showTorusButton: true // default: true
+    // });
+
+    // // this.torus.setProvider({ host: "localhost" });
+
+    // await this.torus.login(); // await torus.ethereum.enable()
+    // this.web3 = new Web3(this.torus.provider);
+
+    // this.watchAccount();
+    // this.model.accounts = await this.web3.eth.getAccounts();
+    // // console.log("ji", this.web3Service.web3);
+    // this.model.primary_account = this.model.accounts[0];
+
+    // this.web3Service
+    //   .artifactsToContract(voterdata_artifact)
+    //   .then((result: any) => {
+    //     this.VoterDataInstance = result;
+    //     this.VoterDataInstance.deployed().then(deployed => {
+    //       console.log("deployed contract : ", deployed);
+    //       this.VoterDataInstance = deployed;
+    //     });
+    //   });
   }
 
   watchAccount() {
-    this.web3Service.accountsObservable.subscribe(accounts => {
-      this.model.accounts = accounts;
-      this.model.primary_account = accounts[0];
-      console.log(accounts[0]);
-      // this.refreshBalance();
-    });
+    // this.web3Service.accountsObservable.subscribe(accounts => {
+    //   this.model.accounts = accounts;
+    //   this.model.primary_account = accounts[0];
+    //   console.log("ACCOUNT SET", accounts[0]);
+    //   // this.refreshBalance();
+    // });
+    this.model.accounts = this.web3Service.accounts;
+    if (this.model.accounts)
+      this.model.primary_account = this.model.accounts[0];
   }
+
+  // async refreshBalance() {
+  //   console.log("Refreshing balance");
+
+  //   try {
+  //     const deployedMetaCoin = await this.MetaCoin.deployed();
+  //     console.log("DeployedMetaCoin", deployedMetaCoin);
+  //     console.log("Account", this.model.account);
+  //     const metaCoinBalance = await deployedMetaCoin.getBalance.call(
+  //       this.model.account
+  //     );
+  //     console.log("Found balance: " + metaCoinBalance);
+  //     this.model.balance = metaCoinBalance;
+  //   } catch (e) {
+  //     console.log(e);
+  //     this.setStatus("Error getting balance; see log.");
+  //   }
+  // }
 
   setStatus(status) {
     this.matSnackBar.open(status, null, { duration: 3000 });
@@ -119,13 +145,17 @@ export class KycVerifierComponent implements OnInit {
     // let voter_dob = moment(new Date(voter.dob).toUTCString()).valueOf() / 1000;
     // let current_time = moment(new Date().toUTCString()).valueOf() / 1000;
 
+    this.VoterDataInstance = this.web3Service.VoterDataInstance;
+
     let voter_dob = new Date(voter.dob).getTime();
     let current_time = new Date().getTime();
-    let uuidHash = this.web3.utils.soliditySha3(voter.uuid);
+    let uuidHash = this.std_web3.utils.soliditySha3(voter.uuid);
 
     try {
       // Get the nonce & post data to the blockchain
+      console.log("PRIMARY ACCOUNT", this.model.primary_account);
       const nonce = await this.web3Service.getNonce(this.model.primary_account);
+      // .then(() => console.log("DAAL DIYA CALLBACK"));
       console.log("Got nonce: ", nonce);
       console.log("account from : ", this.model.primary_account);
       console.log(this.VoterDataInstance);
