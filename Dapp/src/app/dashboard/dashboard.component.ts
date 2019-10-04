@@ -36,9 +36,7 @@ export class DashboardComponent implements OnInit {
   // user = {voter_id:''};
   user: any;
 
-
-  displayedColumns: string[] = ['Label', 'Start Time', 'End Time', 'Action'];
-
+  displayedColumns: string[] = ["Label", "Start Time", "End Time", "Action"];
 
   elections: any;
   // elections = [
@@ -55,7 +53,7 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private web3Service: Web3Service
-  ) { }
+  ) {}
 
   async ngOnInit() {
     console.log("OnInit: " + this.web3Service);
@@ -64,18 +62,20 @@ export class DashboardComponent implements OnInit {
     this.model.accounts = await web3.eth.getAccounts();
     console.log(this.model.accounts);
     this.model.primary_account = this.model.accounts[0];
-    this.user = { voter_id: '' };
+    this.user = { voter_id: "" };
     // this.elections[0] = this.web3Service.election;
     // console.log("election from web3 : " , this.elections[0] );
-    this.web3Service
-      .artifactsToContract(voterdata_artifact)
-      .then((result: any) => {
-        this.VoterDataInstance = result;
-        this.VoterDataInstance.deployed().then(deployed => {
-          console.log(deployed);
-          this.VoterDataInstance = deployed;
-        });
-      });
+    // this.web3Service
+    //   .artifactsToContract(voterdata_artifact)
+    //   .then((result: any) => {
+    //     this.VoterDataInstance = result;
+    //     this.VoterDataInstance.deployed().then(deployed => {
+    //       console.log(deployed);
+    //       this.VoterDataInstance = deployed;
+    //     });
+    //   });f
+
+    // this.VoterDataInstance = this.web3Service.VoterDataInstance;
 
     if (this.web3Service.uuid) {
       this.restore(this.web3Service.uuid);
@@ -93,7 +93,6 @@ export class DashboardComponent implements OnInit {
   }
 
   login(uuid: number, pass: string) {
-
     this.setStatusShort("Logging In ...");
     let url = "/v1/kyc/info/" + uuid.toString() + "/";
     this.http.get(url).subscribe(res => {
@@ -105,10 +104,10 @@ export class DashboardComponent implements OnInit {
       this.setStatusShort("Logged In !");
       this.setEligible();
     });
+    this.VoterDataInstance = this.web3Service.VoterDataInstance;
   }
 
   restore(uuid: number) {
-
     let url = "/v1/kyc/info/" + uuid.toString() + "/";
     this.http.get(url).subscribe(res => {
       console.log(res);
@@ -148,6 +147,7 @@ export class DashboardComponent implements OnInit {
   getVoterId() {
     this.setStatusShort("Generating Voter ID ...");
     const voter_id = uuid.v4().toString();
+    console.log("VOTER_ID", voter_id);
     // this.user.voter_id = voter_id;
     // let voter_id = 'asf';
     this.updateVoterIdOnBlockchain(this.user.uuid, voter_id);
@@ -169,7 +169,7 @@ export class DashboardComponent implements OnInit {
   vote() {
     this.setStatusShort("Redirecting to Voting Page ...");
     // this.router.navigateByUrl("/vote");
-    this.router.navigateByUrl('/otp_verification');
+    this.router.navigateByUrl("/otp_verification");
   }
 
   getResults(label: string) {
@@ -203,15 +203,12 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-
     this.logged_in = false;
     this.web3Service.uuid = null;
     this.model.uuid = null;
     console.log("Logged Out.");
-    this.setStatusShort("Logged out Successfully!")
+    this.setStatusShort("Logged out Successfully!");
     this.router.navigateByUrl("/dashboard");
-
-
   }
 
   refreshElections() {
@@ -234,6 +231,6 @@ export class DashboardComponent implements OnInit {
   }
 
   home() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
   }
 }

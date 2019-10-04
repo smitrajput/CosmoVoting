@@ -13,8 +13,7 @@ import {
 // import { type } from 'os';
 
 const PARTIES = ["BJP", "Congress", "BSP"];
-let CONSTITUENCIES;
-  const RESULT_DATA = [];
+const RESULT_DATA = [];
 // const RESULT_DATA = [
 //   {
 //     "Sr. No.": 1,
@@ -54,58 +53,72 @@ let CONSTITUENCIES;
   ]
 })
 export class VerifyComponent {
-  columnsToDisplay: string[] = ["Sr. No.", "Constituency Name", "Winning Party"];
+  columnsToDisplay: string[] = [
+    "Sr. No.",
+    "Constituency Name",
+    "Winning Party"
+  ];
   dataSource = RESULT_DATA;
   hashes: string[];
   ElectionInstance: any;
   parties = PARTIES;
   result_data = [];
+  CONSTITUENCIES: any;
 
-  election_label = 'test';
+  election_label = "test";
 
   model = {
     uuid: "",
     voterCount: 34,
     vote_hash: ""
   };
-  constructor(private web3Service: Web3Service, private router: Router) {}
+  constructor(private web3Service: Web3Service, private router: Router) {
+    this.election_label = this.web3Service.getElectionLabel();
+    console.log("Retrieved election label:", this.election_label);
+    this.getResult();
+  }
 
   ngOnInit() {
-    this.web3Service
-      .artifactsToContract(elec_artifacts)
-      .then(ElectionAbstraction => {
-        this.ElectionInstance = ElectionAbstraction;
-        this.ElectionInstance.deployed().then(async (deployed) => {
-          console.log(deployed);
-          this.ElectionInstance = deployed;
-
-          CONSTITUENCIES = await this.ElectionInstance.getConstituencies();
-          console.log(CONSTITUENCIES);
-          this.model.voterCount = await this.ElectionInstance.voterCount();
-
-          this.getResult();
-        });
-      });
-
-      this.election_label = this.web3Service.getElectionLabel();
-      console.log("Retrieved election label:", this.election_label);
-
+    // this.web3Service
+    //   .artifactsToContract(elec_artifacts)
+    //   .then(ElectionAbstraction => {
+    //     this.ElectionInstance = ElectionAbstraction;
+    //     this.ElectionInstance.deployed().then(async deployed => {
+    //       console.log(deployed);
+    //       this.ElectionInstance = deployed;
+    //       CONSTITUENCIES = await this.ElectionInstance.getConstituencies();
+    //       console.log(CONSTITUENCIES);
+    //       this.model.voterCount = await this.ElectionInstance.voterCount();
+    //       this.getResult();
+    //     });
+    //   });
+    // this.election_label = this.web3Service.getElectionLabel();
+    // console.log("Retrieved election label:", this.election_label);
     // this.ElectionInstance.
   }
 
   getVoteHash(adhaar: number, password: string) {
     //password = password.trim();
     //  this.hashes
-    let votestring =  adhaar.toString() + password;
-    console.log("akash",":","kumar");
-    console.log("string to be hashed :",votestring,":type:", typeof(votestring));
+    let votestring = adhaar.toString() + password;
+    console.log("akash", ":", "kumar");
+    console.log(
+      "string to be hashed :",
+      votestring,
+      ":type:",
+      typeof votestring
+    );
     this.model.vote_hash = web3.utils.soliditySha3(votestring);
 
     console.log(this.model.vote_hash);
   }
 
-
   async getResult() {
+    this.ElectionInstance = this.web3Service.ElectionInstance;
+    this.CONSTITUENCIES = await this.ElectionInstance.getConstituencies();
+    console.log(this.CONSTITUENCIES);
+    this.model.voterCount = await this.ElectionInstance.voterCount();
+
     console.log(this.model.vote_hash);
     let i = 0;
     let result_object = {
@@ -113,12 +126,12 @@ export class VerifyComponent {
       "Constituency Name": "",
       "Winning Party": "",
       "Number of Votes": {},
-      "vote_hashes":{}
+      vote_hashes: {}
     };
-    for (let j = 0; j < CONSTITUENCIES.length; j++) {
-      let constituency = CONSTITUENCIES[i];
+    for (let j = 0; j < this.CONSTITUENCIES.length; j++) {
+      let constituency = this.CONSTITUENCIES[i];
       console.log(constituency);
-      result_object["Sr. No."] = i+1;
+      result_object["Sr. No."] = i + 1;
       result_object["Constituency Name"] = constituency;
       let winning_party = await this.ElectionInstance.getWinner(constituency);
       result_object["Winning Party"] = winning_party;
@@ -147,10 +160,9 @@ export class VerifyComponent {
       this.dataSource = this.result_data;
     }
     console.log("final result object : ", result_object);
-    
   }
-  
+
   home() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
   }
 }

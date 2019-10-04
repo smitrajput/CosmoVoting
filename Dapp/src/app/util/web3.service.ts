@@ -6,6 +6,7 @@ const Web3 = require("web3");
 import Torus from "@toruslabs/torus-embed";
 import { HttpClientModule } from "@angular/common/http";
 import voterdata_artifact from "../../../build/contracts/VoterData.json";
+import election_artifact from "../../../build/contracts/Election.json";
 import { CarouselsComponent } from "../carousels/carousels.component";
 
 declare let window: any;
@@ -18,6 +19,7 @@ export class Web3Service {
   public uuid: number;
   torus: any;
   VoterDataInstance: any;
+  ElectionInstance: any;
 
   // public election_status = 0;
   public election = {
@@ -86,6 +88,7 @@ export class Web3Service {
       window.web3 = new Web3(this.torus.ethereum);
       console.log("WINDOW.WEB3", window.web3);
       this.createVoterDataInstance();
+      this.createElectionInstance();
     });
     this.refreshAccounts();
     setInterval(() => this.refreshAccounts(), 4000);
@@ -123,6 +126,17 @@ export class Web3Service {
         console.log("deployed contract : ", deployed);
         this.VoterDataInstance = deployed;
         console.log("VDInstance", this.VoterDataInstance);
+      });
+    });
+  }
+
+  createElectionInstance() {
+    this.artifactsToContract(election_artifact).then((result: any) => {
+      this.ElectionInstance = result;
+      this.ElectionInstance.deployed().then(deployed => {
+        console.log("deployed contract : ", deployed);
+        this.ElectionInstance = deployed;
+        console.log("EInstance", this.ElectionInstance);
       });
     });
   }

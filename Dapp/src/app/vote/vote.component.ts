@@ -51,32 +51,43 @@ export class VoteComponent {
     private http: HttpClient,
     private router: Router,
     private web3Service: Web3Service
-  ) {}
-
-  async ngOnInit() {
+  ) {
     console.log("OnInit: " + this.web3Service);
     console.log(this);
     this.watchAccount();
-    this.model.accounts = await web3.eth.getAccounts();
+    this.model.accounts = this.web3Service.accounts;
     console.log(this.model.accounts);
     this.model.primary_account = this.model.accounts[0];
     this.model.uuid = this.web3Service.uuid;
     this.user = { verification_status: false };
+
+    console.log("calling get info");
+    this.get_info();
+  }
+
+  async ngOnInit() {
+    // console.log("OnInit: " + this.web3Service);
+    // console.log(this);
+    // this.watchAccount();
+    // this.model.accounts = await web3.eth.getAccounts();
+    // console.log(this.model.accounts);
+    // this.model.primary_account = this.model.accounts[0];
+    // this.model.uuid = this.web3Service.uuid;
+    // this.user = { verification_status: false };
     // this.model.uuid =22;
-
-    this.web3Service
-      .artifactsToContract(election_artifact)
-      .then(ElectionAbstraction => {
-        this.ElectionInstance = ElectionAbstraction;
-        this.ElectionInstance.deployed().then(deployed => {
-          console.log(deployed);
-          this.ElectionInstance = deployed;
-
-          console.log("calling get info");
-          this.get_info();
-        });
-      });
-    
+    // this.web3Service
+    //   .artifactsToContract(election_artifact)
+    //   .then(ElectionAbstraction => {
+    //     this.ElectionInstance = ElectionAbstraction;
+    //     this.ElectionInstance.deployed().then(deployed => {
+    //       console.log(deployed);
+    //       this.ElectionInstance = deployed;
+    //       console.log("calling get info");
+    //       this.get_info();
+    //     });
+    //   });
+    // console.log("calling get info");
+    // this.get_info();
   }
 
   watchAccount() {
@@ -89,15 +100,17 @@ export class VoteComponent {
   }
 
   get_info() {
+    this.ElectionInstance = this.web3Service.ElectionInstance;
+
     let url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
     console.log("inside get info ", url);
     this.http.get(url).subscribe(
       async (res: any) => {
         console.log(res);
         this.user = res;
-        let has_voted = await<any> this.check_has_voted();
-        if (has_voted){
-            return;
+        let has_voted = await (<any>this.check_has_voted());
+        if (has_voted) {
+          return;
         }
         this.model.constituency = res["constituency"];
 
@@ -143,18 +156,21 @@ export class VoteComponent {
       " : ",
       vote_hash
     );
-    
+
     const nonce = await this.web3Service.getNonce(this.model.primary_account);
     console.log("Got nonce: ", nonce);
 
     this.ElectionInstance.registerVote
-      .sendTransaction(voter_id_hash,
+      .sendTransaction(
+        voter_id_hash,
         this.model.constituency,
         this.model.selected_party,
-        vote_hash, {
-        from: this.model.primary_account,
-        nonce: nonce
-      })
+        vote_hash,
+        {
+          from: this.model.primary_account,
+          nonce: nonce
+        }
+      )
       .then((res, err) => {
         if (err !== undefined) {
           console.error(err);
@@ -165,7 +181,7 @@ export class VoteComponent {
             console.log(res.receipt);
             this.model.show_voting_info = false;
             this.setStatus(
-                "Vote Confirmed! You can view the transaction on etherscan"
+              "Vote Confirmed! You can view the transaction on etherscan"
             );
           }
         }
@@ -219,6 +235,6 @@ export class VoteComponent {
   }
 
   home() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl("/home");
   }
 }

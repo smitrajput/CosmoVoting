@@ -39,29 +39,36 @@ export class AdminComponent implements OnInit {
     private http: HttpClient,
     private web3Service: Web3Service,
     private router: Router
-  ) {}
-
-  async ngOnInit() {
+  ) {
     console.log("OnInit: " + this.web3Service);
     console.log(this);
     this.watchAccount();
-    this.model.accounts = await web3.eth.getAccounts();
+    this.model.accounts = this.web3Service.accounts;
     console.log(this.model.accounts);
+
+    this.getElections();
+  }
+
+  async ngOnInit() {
+    // console.log("OnInit: " + this.web3Service);
+    // console.log(this);
+    // this.watchAccount();
+    // this.model.accounts = this.web3Service.accounts;
+    // console.log(this.model.accounts);
     // this.elections[0] = this.web3Service.election;
     // console.log("election from web3 : ", this.elections[0]);
     // console.log("new election : ", this.elections);
-
-    this.web3Service
-      .artifactsToContract(election_artifact)
-      .then(ElectionAbstraction => {
-        this.ElectionInstance = ElectionAbstraction;
-        this.ElectionInstance.deployed().then(deployed => {
-          console.log(deployed);
-          this.ElectionInstance = deployed;
-        });
-      });
-
-    this.getElections();
+    // this.web3Service
+    //   .artifactsToContract(election_artifact)
+    //   .then(ElectionAbstraction => {
+    //     this.ElectionInstance = ElectionAbstraction;
+    //     this.ElectionInstance.deployed().then(deployed => {
+    //       console.log(deployed);
+    //       this.ElectionInstance = deployed;
+    //     });
+    //   });
+    // this.ElectionInstance = this.web3Service.ElectionInstance;
+    // this.getElections();
   }
 
   watchAccount() {
@@ -77,18 +84,20 @@ export class AdminComponent implements OnInit {
     var tx_hash = await this.ElectionInstance.calculateVotes({
       from: this.model.accounts[0]
     }).on("receipt", receipt => {
-      console.log("Calculated");
+      console.log("VOTESCalculated");
       console.log(receipt);
     });
 
     console.log(tx_hash);
   }
+
   refreshElections() {
     console.log("refreshing elections..");
     this.getElections();
   }
 
   getElections() {
+    this.ElectionInstance = this.web3Service.ElectionInstance;
     let url = "/v1/elections/";
     console.log("inside get elections ", url);
     this.http.get(url).subscribe(

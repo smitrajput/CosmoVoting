@@ -48,20 +48,20 @@ contract Election {
     voterCount = 0;
     }  
 
-    function addEcOfficial (address official) public onlyEcHead {
+    function addEcOfficial (address official) public {
         ec_officials[official] = true;
     }
-    function removeEcOfficial(address official) public onlyEcHead {
+    function removeEcOfficial(address official) public {
         ec_officials[official] = false;
         delete ec_officials[official];
     }
 
-    function addParty (string memory party_name) public onlyEcOfficial {
+    function addParty (string memory party_name) public {
         // require(!isVaultOpened);
         // require(beginTime >= uint256(now), "Cannot add a party after the elections have started.");
         parties.push(party_name);
     }
-    function addConstituency (string memory constituency) public onlyEcOfficial{
+    function addConstituency (string memory constituency) public {
         // require(!isVaultOpened);
         // require(beginTime >= uint256(now), "Cannot add a constituency after the elections have started.");
         constituencies.push(constituency);
@@ -83,7 +83,7 @@ contract Election {
         hasVoted[uuid_hash] = true;
     }
 
-    function calculateVotes() public  onlyEcHead returns (bool) {
+    function calculateVotes() public returns (bool) {
         // require(endTime <= uint256(now), "The election period is not over. Can't calculate the votes before election ends.");
         string memory _winner;
 
@@ -111,7 +111,7 @@ contract Election {
         return  result[constituency][party];
     }
 
-    function resetElection() public onlyEcHead returns(bool){
+    function resetElection() public returns(bool){
         for (uint i = 0; i < constituencies.length; i++)
         {
             for (uint j = 0; j < parties.length; j++){
