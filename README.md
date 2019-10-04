@@ -1,6 +1,7 @@
 <h1 align="center">CosmoVoting</h1>
 <p align="center">Taking Decentralized Voting to the NEXT level</p>
-#### Setting up the project
+
+### Setting up the project
 
 1. Clone the repo using `https://github.com/smitrajput/VoteX.git` and `cd` into it
 2. To start the ganache instance, type `ganache-cli --port 8546'`
