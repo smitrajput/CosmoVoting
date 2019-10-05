@@ -53,16 +53,18 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private web3Service: Web3Service
-  ) {}
+  ) {
+    this.getElections();
+  }
 
   async ngOnInit() {
-    console.log("OnInit: " + this.web3Service);
-    console.log(this);
-    this.watchAccount();
-    this.model.accounts = await web3.eth.getAccounts();
-    console.log(this.model.accounts);
-    this.model.primary_account = this.model.accounts[0];
-    this.user = { voter_id: "" };
+    // console.log("OnInit: " + this.web3Service);
+    // console.log(this);
+    // this.watchAccount();
+    // this.model.accounts = await web3.eth.getAccounts();
+    // console.log(this.model.accounts);
+    // this.model.primary_account = this.model.accounts[0];
+    // this.user = { voter_id: "" };
     // this.elections[0] = this.web3Service.election;
     // console.log("election from web3 : " , this.elections[0] );
     // this.web3Service
@@ -74,13 +76,11 @@ export class DashboardComponent implements OnInit {
     //       this.VoterDataInstance = deployed;
     //     });
     //   });f
-
     // this.VoterDataInstance = this.web3Service.VoterDataInstance;
-
-    if (this.web3Service.uuid) {
-      this.restore(this.web3Service.uuid);
-    }
-    this.getElections();
+    // if (this.web3Service.uuid) {
+    //   this.restore(this.web3Service.uuid);
+    // }
+    // this.getElections();
   }
 
   watchAccount() {
@@ -104,7 +104,6 @@ export class DashboardComponent implements OnInit {
       this.setStatusShort("Logged In !");
       this.setEligible();
     });
-    this.VoterDataInstance = this.web3Service.VoterDataInstance;
   }
 
   restore(uuid: number) {
@@ -216,7 +215,18 @@ export class DashboardComponent implements OnInit {
     this.getElections();
   }
 
-  getElections() {
+  async getElections() {
+    this.VoterDataInstance = await this.web3Service.VoterDataInstance;
+    this.watchAccount();
+    this.model.accounts = await this.web3Service.accounts;
+    console.log(this.model.accounts);
+    this.model.primary_account = this.model.accounts[0];
+    this.user = { voter_id: "" };
+
+    if (this.web3Service.uuid) {
+      this.restore(this.web3Service.uuid);
+    }
+
     let url = "/v1/elections/";
     console.log("inside get elections ", url);
     this.http.get(url).subscribe(

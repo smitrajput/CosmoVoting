@@ -43,8 +43,6 @@ export class AdminComponent implements OnInit {
     console.log("OnInit: " + this.web3Service);
     console.log(this);
     this.watchAccount();
-    this.model.accounts = this.web3Service.accounts;
-    console.log(this.model.accounts);
 
     this.getElections();
   }
@@ -96,8 +94,11 @@ export class AdminComponent implements OnInit {
     this.getElections();
   }
 
-  getElections() {
-    this.ElectionInstance = this.web3Service.ElectionInstance;
+  async getElections() {
+    this.ElectionInstance = await this.web3Service.ElectionInstance;
+    this.model.accounts = await this.web3Service.accounts;
+    console.log(this.model.accounts);
+
     let url = "/v1/elections/";
     console.log("inside get elections ", url);
     this.http.get(url).subscribe(
