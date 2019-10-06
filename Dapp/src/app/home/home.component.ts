@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(private web3Service: Web3Service) {
-    // this.addConstituencies();
+    this.addConstituencies();
   }
 
   ngOnInit() {}
@@ -60,10 +60,10 @@ export class HomeComponent implements OnInit {
     //     from: this.accounts[0],
     //     nonce: this.nonce
     //   });
-    //   await this.ElectionInstance.addParty("BJP", {
-    //     from: this.accounts[0],
-    //     nonce: this.nonce
-    //   });
+    // await this.ElectionInstance.addParty("BJP", {
+    //   from: this.accounts[0],
+    //   nonce: this.nonce
+    // });
     //   await this.ElectionInstance.addParty("BSP", {
     //     from: this.accounts[0],
     //     nonce: this.nonce

@@ -63,26 +63,26 @@ contract Election {
     isVaultOpened = false;
     }  
 
-    function addEcOfficial (address official) public onlyEcHead {
+    function addEcOfficial (address official) public {
         ec_officials[official] = true;
     }
-    function removeEcOfficial(address official) public onlyEcHead {
+    function removeEcOfficial(address official) public {
         ec_officials[official] = false;
         delete ec_officials[official];
     }
-    function addKycVerifier (address verifier) public onlyEcOfficial {
+    function addKycVerifier (address verifier) public {
         kyc_verifiers[verifier] = true;
     }
-    function removeKycVerifier(address verifier) public onlyEcOfficial {
+    function removeKycVerifier(address verifier) public {
         kyc_verifiers[verifier] = false;
         delete kyc_verifiers[verifier];
     }
-    function addParty (string memory party_name) public onlyEcOfficial {
+    function addParty (string memory party_name) public {
         // require(!isVaultOpened);
         // require(beginTime >= uint256(now), "Cannot add a party after the elections have started.");
         parties.push(party_name);
     }
-    function addConstituency (string memory constituency) public onlyEcOfficial{
+    function addConstituency (string memory constituency) public {
         // require(!isVaultOpened);
         // require(beginTime >= uint256(now), "Cannot add a constituency after the elections have started.");
         constituencies.push(constituency);
@@ -105,7 +105,7 @@ contract Election {
         hasVoted[uuid_hash] = true;
     }
 
-    function calculateVotes() public  onlyEcHead returns (bool) {
+    function calculateVotes() public returns (bool) {
         // require(endTime <= uint256(now), "The election period is not over. Can't calculate the votes before election ends.");
         string memory _winner;
 

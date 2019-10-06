@@ -2,7 +2,11 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-header" style="text-align: center" (click)="redirect()">
+        <div
+          class="card-header"
+          style="text-align: center"
+          (click)="redirect()"
+        >
           First-Past-The-Post
           <div class="card-header-actions">
             <a
@@ -17,24 +21,23 @@
           <carousel [interval]="false">
             <slide>
               <img
-                src="https://lorempixel.com/900/500/nature/1"
-                alt="First slide"
+                src="../../assets/tajmahal.jpg"
+                alt="India"
                 style="display: block; width: 100%;"
               />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>India</h3>
+              </div>
             </slide>
             <slide>
               <img
-                src="https://lorempixel.com/900/500/nature/2"
-                alt="Second slide"
+                src="../../assets/statue.jpg"
+                alt="USA"
                 style="display: block; width: 100%;"
               />
-            </slide>
-            <slide>
-              <img
-                src="https://lorempixel.com/900/500/nature/3"
-                alt="Third slide"
-                style="display: block; width: 100%;"
-              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>USA</h3>
+              </div>
             </slide>
           </carousel>
         </div>
@@ -49,40 +52,23 @@
           <carousel [interval]="false">
             <slide>
               <img
-                src="https://lorempixel.com/900/500/technics/1"
-                alt="First slide"
-                style="display: block; width: 100%;"
+                src="../../assets/toower.jpg"
+                alt="France"
+                style="display: block;
+              width: 100%;"
               />
               <div class="carousel-caption d-none d-md-block">
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <h3>France</h3>
               </div>
             </slide>
             <slide>
               <img
-                src="https://lorempixel.com/900/500/technics/2"
-                alt="Second slide"
+                src="../../assets/costarica.jpg"
+                alt="Costa Rica"
                 style="display: block; width: 100%;"
               />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </slide>
-            <slide>
-              <img
-                src="https://lorempixel.com/900/500/technics/3"
-                alt="Third slide"
-                style="display: block; width: 100%;"
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
+                <h3>Costa Rica</h3>
               </div>
             </slide>
           </carousel>
@@ -100,40 +86,22 @@
           <carousel [interval]="false">
             <slide>
               <img
-                src="https://lorempixel.com/900/500/city/1"
-                alt="First slide"
+                src="../../assets/oopera.jpeg"
+                alt="Australia"
                 style="display: block; width: 100%;"
               />
               <div class="carousel-caption d-none d-md-block">
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <h3>Australia</h3>
               </div>
             </slide>
             <slide>
               <img
-                src="https://lorempixel.com/900/500/city/2"
-                alt="Second slide"
+                src="../../assets/ireland.jpg"
+                alt="Ireland"
                 style="display: block; width: 100%;"
               />
               <div class="carousel-caption d-none d-md-block">
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </slide>
-            <slide>
-              <img
-                src="https://lorempixel.com/900/500/city/3"
-                alt="Third slide"
-                style="display: block; width: 100%;"
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
+                <h3>Ireland</h3>
               </div>
             </slide>
           </carousel>
@@ -146,21 +114,25 @@
           Majority Bonus System
         </div>
         <div class="card-body">
-          <carousel
-            [interval]="myInterval"
-            [noWrap]="noWrapSlides"
-            [(activeSlide)]="activeSlideIndex"
-          >
-            <slide *ngFor="let slide of slides; let index = index">
+          <carousel [interval]="false">
+            <slide>
               <img
-                [src]="slide.image"
-                alt="image slide"
+                src="../../assets/colosseum.jpg"
+                alt="Italy"
                 style="display: block; width: 100%;"
               />
-
-              <div class="carousel-caption">
-                <h4>Slide {{ index }}</h4>
-                <p>{{ slide.text }}</p>
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Italy</h3>
+              </div>
+            </slide>
+            <slide>
+              <img
+                src="../../assets/greece.jpg"
+                alt="Greece"
+                style="display: block; width: 100%;"
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h3>Greece</h3>
               </div>
             </slide>
           </carousel>
