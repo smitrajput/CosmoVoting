@@ -1,5 +1,5 @@
 <h1 align="center">CosmoVoting</h1>
-<p align="center">Taking Decentralized Voting to the NEXT level</p>
+<p align="center">Taking Decentralized Voting to the <strong><i>next</i></strong> level</p>
 
 ### Setting up the project
 
