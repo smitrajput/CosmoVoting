@@ -52,7 +52,7 @@ The project has 4 core Modules, which would implement Secure, Anonymous, Transpa
 
 ## The Cryptographic Magic
 
-No rocket science here. We're using simple hashing and encryption techniques, but in a smart way, to achieve anonymity and security, even on the blockchain, when options like zero-knowledge proofs and bullet-proofs are available. This is to achieve gas and performance optimization. Because more often than not, it is easy to make things complicated, but difficult to keep things simple. <br />Have a look at [these](https://docs.google.com/presentation/d/1tiJDx7bGmrfV_m3lpP05wcTkpXaNBxdl3k6ELBQkQMk/edit?usp=sharing) slides to experience the feel of it.
+No rocket science here. We're using simple hashing and encryption techniques, but in a smart way, to achieve anonymity and security, even on the blockchain, when options like zero-knowledge proofs and bullet-proofs are available. This is to achieve gas and performance optimization. Because more often than not, it is easy to make things complicated, but difficult to keep things simple. <br />Have a look at [these](https://docs.google.com/presentation/d/1tiJDx7bGmrfV_m3lpP05wcTkpXaNBxdl3k6ELBQkQMk/edit#slide=id.g5bd8ede694_0_8) slides to experience the feel of it.
 
 ## Impact Points
 
