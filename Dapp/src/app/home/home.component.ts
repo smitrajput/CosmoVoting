@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
     //   from: this.accounts[0],
     //   nonce: this.nonce
     // });
-    //   this.nonce = this.nonce + 1;
+    // this.nonce = this.nonce + 1;
     //   await this.ElectionInstance.addConstituency("mumbai", {
     //     from: this.accounts[0],
     //     nonce: this.nonce

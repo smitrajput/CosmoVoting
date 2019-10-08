@@ -30,11 +30,26 @@ while exploring/exploiting the synergies produced during the process.
 3. Speeding up the State-Of-The-Art voting processes in the 3 domains mentioned in the 'Vision' above.
 4. Reducing overall costs incurred by Governments in conducting their elections.
 
+## Project Structure
+
+The project has 4 core Modules, which would implement Secure, Anonymous, Transparent (SAT from here on) Voting solutions for the following:
+
+- Module 1: Governments
+  - 13 types of Electoral Systems
+- Module 2: Enterprises and Corporates
+- Module 3: Governance Protocols (in Ethereum and other blockchains)
+- Module 4: Customized Needs of Clients
+
 ## Key Features
 
 1. Current implementation includes a secure, anaonymous and transparent implementation of the First-Past-The-Post type Elections, which is one type out of a total of 13 concrete types of Electoral systems.
 2. Providing full-fledged voting solutions, and SATaaS (Security, Anonymity and Transparency as a Service) to existing voting solutions in the 3 domains mentioned in the 'Vision' above.
-3. A Plug-and-Play SDK to allow developers and other organizations to create Secure, Anonymous, Transparent (SAT from here on) and customized voting solutions, in accordance with their needs.
+3. A Plug-and-Play SDK to allow developers and other organizations to create SAT and customized voting solutions, in accordance with their needs.
+4. The Cryptographic Magic
+
+## The Cryptographic Magic
+
+No rocket science here. We're using simple hashing and encryption techniques, but in a smart way, to achieve anonymity and security, even on the blockchain, when options like zero-knowledge proofs and bullet-proofs are available. This is to achieve gas and performance optimization. Because more often than not, it is easy to make things complicated, but difficult to keep things simple. <br />Have a look at [these](https://docs.google.com/presentation/d/1tiJDx7bGmrfV_m3lpP05wcTkpXaNBxdl3k6ELBQkQMk/edit?usp=sharing) slides to experience the feel of it.
 
 ## Impact Points
 
@@ -54,12 +69,21 @@ CosmoVoting uses Torus for a seamless authentication experience for its users, f
 2. Generates a wallet for every gmail account, which acted as a sweet bridge for us, between OAuth 2.0 and Web 3.0 wallets like MetaMask.
 3. Torus would help us in orders of magnitudes, in exploring decentralized Global Identites for International and Inter-Continental Voting, for purposes meant to impact the world as a whole (think Framing international policies to tackle Climate Change, and the likes)
 
+## Tech Stack
+
+1. Solidity (for smart contracts on Ethereum blockchain)
+2. Truffle Framework (to speed up blockchain developent)
+3. web3.js (blockchain interaction)
+4. Torus (auth and wallet)
+5. Django (server)
+6. Angular (front-end)
+
 ## Local Setup
 
 1. Clone the repo using `https://github.com/smitrajput/CosmoVoting.git` and `cd` into it
 2. To start the ganache instance, type `ganache-cli --port 8546`
 3. Start a ganache proxy server using: `ganache-http-proxy`
-4. Fire a new terminal in the same folder type `cd Dapp` and then `truffle migrate` to deploy the contracts to the local ganache instance
+4. Fire a new terminal in the same folder type `cd Dapp`, followed by `npm i`, then `truffle migrate` to deploy the contracts to the local ganache instance
 5. Now, type `cd ..` and create a python3 virtual environment using `python3 -m venv ./venvs/django` OR `virtualenv -p python3 ./venvs/django/bin/`
 6. In the same terminal, start the virtual environment using `source ./venvs/django/bin/activate`
 7. After making sure pip, python, django are installed in the virtual environment too, type `cd django && pip3 install -r requirements.txt`
@@ -73,6 +97,6 @@ CosmoVoting uses Torus for a seamless authentication experience for its users, f
 2. Implementing SAT elections for the remaining 12 types of Electoral systems.
 3. Inculcating Advanced Security implementations via GPIPs (Global Project Improvement Proposals)
 
-## Core Team
+## Team
 
 [Smit Rajput](https://www.linkedin.com/in/smit-rajput-417517139/)<br />[Akash Kumar](https://www.linkedin.com/in/akash981/)<br />[Tezan Sahu](https://www.linkedin.com/in/tezan-sahu/)
