@@ -75,7 +75,7 @@ CosmoVoting uses Torus for a seamless authentication experience for its users, f
 ## Tech Stack
 
 1. Solidity (for smart contracts on Ethereum blockchain)
-2. Truffle Framework (to speed up blockchain developent)
+2. Truffle Framework (to speed up blockchain development)
 3. web3.js (blockchain interaction)
 4. Torus (auth and wallet)
 5. Django (server)
