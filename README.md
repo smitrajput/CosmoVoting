@@ -5,12 +5,15 @@
 
 - [Vision](#vision)
 - [Problems to Solve](#problems-to-solve)
+- [Project Structure](#project-structure)
 - [Key Features](#key-featuers)
+- [The Cryptographic Magic](#the-cryptographic-magic)
 - [Impact Points](#impact-points)
 - [Collaboration](#collaboration)
-- [Local Setup](#local-setup-)
+- [Tech Stack](#tech-stack)
+- [Local Setup](#local-setup)
 - [Next Steps](#next-steps)
-- [Core Team](#core-team)
+- [Team](#team)
 
 ## Vision
 
