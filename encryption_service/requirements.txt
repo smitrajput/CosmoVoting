@@ -14,7 +14,7 @@ cffi==1.12.3
 couchbase==2.5.5
 chardet==3.0.4
 crypto==1.4.1
-cryptography==2.7
+cryptography==3.2
 idna==2.8
 Naked==0.1.31
 pycparser==2.19
