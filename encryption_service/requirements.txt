@@ -19,11 +19,11 @@ idna==2.8
 Naked==0.1.31
 pycparser==2.19
 pycryptodome==3.8.2
-PyYAML==5.1.1
+PyYAML==5.4
 requests==2.22.0
 shellescape==3.4.1
 six==1.12.0
 urllib3==1.25.3
 Werkzeug==0.15.4
 python-memcached==1.59
-PyYAML==5.1.1
+PyYAML==5.4
