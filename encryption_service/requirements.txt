@@ -7,7 +7,7 @@ pydantic==0.29
 starlette==0.12.0
 uvicorn==0.8.3
 uvloop==0.12.2
-websockets==7.0
+websockets==9.1
 asn1crypto==0.24.0
 certifi==2019.6.16
 cffi==1.12.3
