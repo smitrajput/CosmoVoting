@@ -18,7 +18,7 @@ incremental==17.5.0
 msgpack==0.5.6
 pubcontrol==2.4.2
 pycparser==2.18
-PyJWT==1.6.4
+PyJWT==2.4.0
 pytz==2018.5
 PyYAML==3.13
 requests==2.19.1
